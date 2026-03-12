@@ -54,48 +54,88 @@ function Home() {
   const pending = total - completed;
 
   return (
-    <div className="container mt-5">
-      <h2>Todo App</h2>
+  <div>
 
-      <div className="input-group mb-3">
-        <input
-          className="form-control"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Todo yaz..."
-        />
-        <button className="btn btn-primary" onClick={addTodo}>
-          Ekle
-        </button>
-      </div>
-
-      <div className="mb-3">
-        <button className="btn btn-secondary me-2" onClick={() => setFilter("all")}>Tümü</button>
-        <button className="btn btn-success me-2" onClick={() => setFilter("completed")}>Tamamlanan</button>
-        <button className="btn btn-warning" onClick={() => setFilter("pending")}>Bekleyen</button>
-      </div>
-
-      <ul className="list-group mb-2">
-        {todos
-          .filter(todo =>
-            filter === "all" ? true :
-            filter === "completed" ? todo.completed : !todo.completed
-          )
-          .map(todo => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              deleteTodo={deleteTodo}
-              updateTodo={updateTodo}
-              toggleComplete={toggleComplete}
-            />
-          ))
-        }
-      </ul>
-
-      <p>Toplam: {total} | Tamamlanan: {completed} | Bekleyen: {pending}</p>
+    <div 
+      style={{
+        backgroundImage: "url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "180px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white"
+      }}
+    >
+      <h1 style={{fontSize:"48px", fontWeight:"bold"}}>Todo App</h1>
     </div>
-  );
+
+    <div className="container mt-4">
+
+      <div className="card shadow p-4">
+
+        <div className="input-group mb-3">
+          <input
+            className="form-control"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Todo yaz..."
+          />
+          <button className="btn btn-primary" onClick={addTodo}>
+            Ekle
+          </button>
+        </div>
+
+        <div className="btn-group mb-3">
+            <button 
+                className={`btn ${filter === "all" ? "btn-success" : "btn-outline-success"}`}
+                onClick={() => setFilter("all")}
+            >
+                Today
+            </button>
+
+            <button 
+                className={`btn ${filter === "pending" ? "btn-warning" : "btn-outline-warning"}`}
+                onClick={() => setFilter("pending")}
+            >
+                Pending
+            </button>
+
+            <button 
+                className={`btn ${filter === "completed" ? "btn-secondary" : "btn-outline-secondary"}`}
+                onClick={() => setFilter("completed")}
+            >
+                Completed
+            </button>
+        </div>
+
+        <ul className="list-group mb-2">
+          {todos
+            .filter(todo =>
+              filter === "all" ? true :
+              filter === "completed" ? todo.completed : !todo.completed
+            )
+            .map(todo => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                deleteTodo={deleteTodo}
+                updateTodo={updateTodo}
+                toggleComplete={toggleComplete}
+              />
+            ))
+          }
+        </ul>
+            <div className="mt-3 text-muted">
+            <b>Total:</b> {total} | 
+            <b> Completed:</b> {completed} | 
+            <b> Pending:</b> {pending}
+            </div>
+      </div>
+    </div>
+  </div>
+);
 }
 
 export default Home;
